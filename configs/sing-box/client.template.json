@@ -1,0 +1,77 @@
+{
+  "_comment": "Клиент sing-box с автопереключением (Часть 2 §15, Часть 3 Рецепт 11). Положите СЮДА профили со ВСЕХ серверов и схем — клиент сам выберет живой по url-test. Замените __...__ значениями из ./scripts/gen-client-link.sh.",
+  "log": { "level": "warn" },
+  "dns": {
+    "servers": [
+      { "tag": "proxy-dns", "address": "https://1.1.1.1/dns-query", "detour": "select" },
+      { "tag": "local-dns", "address": "https://223.5.5.5/dns-query", "detour": "direct" }
+    ],
+    "rules": [
+      { "domain_suffix": [".ru", ".рф"], "server": "local-dns" }
+    ],
+    "final": "proxy-dns",
+    "strategy": "prefer_ipv4"
+  },
+  "inbounds": [
+    { "type": "tun", "tag": "tun-in", "interface_name": "tun0", "address": ["172.19.0.1/30"], "auto_route": true, "strict_route": true, "stack": "system" }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "select",
+      "outbounds": ["auto", "reality-srv1", "hysteria2-srv1"],
+      "default": "auto"
+    },
+    {
+      "type": "urltest",
+      "tag": "auto",
+      "outbounds": ["reality-srv1", "hysteria2-srv1"],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    {
+      "type": "vless",
+      "tag": "reality-srv1",
+      "server": "__SERVER_IP__",
+      "server_port": __VLESS_PORT__,
+      "uuid": "__UUID__",
+      "flow": "xtls-rprx-vision",
+      "tls": {
+        "enabled": true,
+        "server_name": "__REALITY_SNI__",
+        "utls": { "enabled": true, "fingerprint": "chrome" },
+        "reality": { "enabled": true, "public_key": "__REALITY_PUBLIC_KEY__", "short_id": "__SHORT_ID__" }
+      }
+    },
+    {
+      "type": "hysteria2",
+      "tag": "hysteria2-srv1",
+      "server": "__SERVER_IP__",
+      "server_port": __HY2_PORT__,
+      "password": "__HY2_AUTH_PASSWORD__",
+      "obfs": { "type": "salamander", "password": "__HY2_OBFS_PASSWORD__" },
+      "tls": { "enabled": true, "server_name": "__REALITY_SNI__", "insecure": true }
+    },
+    { "type": "direct", "tag": "direct" }
+  ],
+  "route": {
+    "rules": [
+      { "action": "sniff" },
+      { "protocol": "dns", "action": "hijack-dns" },
+      { "ip_is_private": true, "outbound": "direct" },
+      { "domain_suffix": [".ru", ".рф"], "outbound": "direct" },
+      { "rule_set": "geoip-ru", "outbound": "direct" }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "geoip-ru",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ru.srs"
+      }
+    ],
+    "final": "select",
+    "auto_detect_interface": true
+  }
+}

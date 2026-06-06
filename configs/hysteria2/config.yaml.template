@@ -1,0 +1,35 @@
+# Hysteria2 — быстрый UDP/QUIC резерв (Часть 3, Рецепт 4).
+# Salamander ломает QUIC-детекцию ТСПУ; маскарад прячет сервер под донора.
+# Рендерится скриптом 04-install-hysteria2.sh — плейсхолдеры __...__ подставляются.
+
+listen: :__HY2_PORT__
+
+# --- TLS ---
+# Вариант A (рекомендуется): реальный сертификат Let's Encrypt (нужен домен -> A-запись на VPS).
+__ACME_BLOCK__
+
+# Вариант B (без домена): самоподписанный сертификат (раскомментируется автоматически, если DOMAIN пуст).
+__TLS_BLOCK__
+
+# --- Обфускация: одинаковый пароль на клиенте и сервере ---
+obfs:
+  type: salamander
+  salamander:
+    password: __OBFS_PASSWORD__
+
+# --- Аутентификация ---
+auth:
+  type: password
+  password: __AUTH_PASSWORD__
+
+# --- Полоса (~80% реальной полосы сервера) ---
+bandwidth:
+  up: 100 mbps
+  down: 100 mbps
+
+# --- Маскарад: на что «похож» сервер для случайных гостей/сканеров ---
+masquerade:
+  type: proxy
+  proxy:
+    url: https://__REALITY_SNI__/
+    rewriteHost: true
