@@ -1,7 +1,7 @@
 # Удобные сокращения. Под капотом — ./deploy.sh.
 # Использование:  sudo make all   |   make help
 
-.PHONY: help all harden reality hysteria2 panel backup status check health link singbox lint
+.PHONY: help all harden reality hysteria2 panel backup update versions status check health link singbox lint
 
 help:        ## показать список команд
 	@grep -E '^[a-z-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -23,6 +23,12 @@ panel:       ## веб-панель 3X-UI (GUI вместо чистого Xray)
 
 backup:      ## собрать «тревожный чемоданчик»
 	sudo ./deploy.sh backup
+
+update:      ## обновить всё до свежих версий (Xray, Hysteria2, код)
+	sudo ./deploy.sh update
+
+versions:    ## показать установленные и последние доступные версии
+	./deploy.sh versions
 
 status:      ## статус сервисов и клиентские ссылки
 	sudo ./deploy.sh status

@@ -10,6 +10,8 @@
 #   sudo ./deploy.sh hysteria2    # только Hysteria2 (UDP-резерв + port hopping)
 #   sudo ./deploy.sh panel        # установить веб-панель 3X-UI (GUI-управление)
 #   sudo ./deploy.sh backup       # собрать «тревожный чемоданчик»
+#   sudo ./deploy.sh update       # обновить всё до свежих версий (Xray, Hysteria2, код)
+#   sudo ./deploy.sh versions     # показать установленные и последние доступные версии
 #   sudo ./deploy.sh status       # показать статус и клиентские ссылки
 #   sudo ./deploy.sh check        # проверить доступность IP из РФ
 #
@@ -46,6 +48,8 @@ case "$cmd" in
   hysteria2) require_root; bash "${S}/04-install-hysteria2.sh" ;;
   panel)     require_root; bash "${S}/03-install-3xui.sh" ;;
   backup)    require_root; bash "${S}/backup.sh" ;;
+  update)    require_root; bash "${S}/update.sh" ;;
+  versions)  bash "${S}/update.sh" check ;;
   link)      bash "${S}/gen-client-link.sh" "${2:-dimosi-reality}" ;;
   check)     bash "${S}/check-ip-russia.sh" "${2:-}" ;;
   health)    bash "${S}/healthcheck.sh" ;;
