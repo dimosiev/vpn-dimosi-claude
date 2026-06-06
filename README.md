@@ -108,9 +108,9 @@ make help               # все команды
 Нужен **современный прокси-клиент** с поддержкой свежего Xray-core и flow Vision
 (обычные «классические» VPN-приложения не подойдут):
 
-- **iOS:** v2RayTun, Streisand, Hiddify
+- **iOS:** Shadowrocket, v2RayTun, Streisand, Hiddify
 - **Android:** v2RayTun, Hiddify, v2rayNG
-- **Windows:** v2rayN, Hiddify · **macOS:** v2RayTun, Hiddify
+- **Windows:** v2rayN, Hiddify · **macOS:** Shadowrocket, v2RayTun, Hiddify
 
 Импортируйте `vless://…` ссылку (или QR) из вывода деплоя, либо файл
 `out/client-singbox.json` в Hiddify — он сам выберет живой профиль.
@@ -126,10 +126,11 @@ make help               # все команды
 | [03-vless-reality.md](docs/03-vless-reality.md) | Как устроен Reality, выбор донора, параметры |
 | [04-hysteria2.md](docs/04-hysteria2.md) | UDP-резерв, Salamander, port hopping |
 | [05-backup-restore.md](docs/05-backup-restore.md) | Бэкапы и восстановление за 15 минут |
-| [06-clients.md](docs/06-clients.md) | Приложения, подписки, автопереключение |
+| [06-clients.md](docs/06-clients.md) | **Shadowrocket** и другие приложения, автопереключение |
 | [07-when-blocked.md](docs/07-when-blocked.md) | План действий при блокировке (дерево решений) |
 | [08-defense-in-depth.md](docs/08-defense-in-depth.md) | Каталог всех схем: CDN, CFXHTTP, AmneziaWG, Tor… |
 | [09-debug.md](docs/09-debug.md) | Логи, типичные ошибки, алгоритм диагностики |
+| [10-monitoring.md](docs/10-monitoring.md) | Мониторинг + алерты в Telegram (узнать о блокировке первым) |
 
 ## Тотальное резервирование (чеклист)
 
