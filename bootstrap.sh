@@ -145,6 +145,13 @@ masquerade:
     rewriteHost: true
 YAML
   chmod 600 "$HY2_CONFIG"
+  # Сервис hysteria-server работает под пользователем 'hysteria' (создан установщиком) —
+  # дать ему доступ на чтение конфига, сертификата и ключа, иначе сервис не стартует.
+  if id hysteria >/dev/null 2>&1; then
+    chown -R hysteria:hysteria /etc/hysteria 2>/dev/null || true
+    chmod 750 /etc/hysteria 2>/dev/null || true
+    chmod 640 /etc/hysteria/config.yaml /etc/hysteria/server.crt /etc/hysteria/server.key 2>/dev/null || true
+  fi
 
   # Port hopping через nftables (персистентно).
   if [[ -n "$HY2_HOP_RANGE" ]]; then
