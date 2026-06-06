@@ -57,7 +57,7 @@ chmod 600 "${HY2_CONFIG}"
 # Сервис hysteria-server работает под пользователем 'hysteria' — дать ему доступ
 # на чтение конфига/сертификата/ключа, иначе сервис не стартует (Permission denied).
 if id hysteria >/dev/null 2>&1; then
-  chown -R hysteria:hysteria /etc/hysteria 2>/dev/null || true
+  chown -R hysteria /etc/hysteria 2>/dev/null || true
   chmod 750 /etc/hysteria 2>/dev/null || true
   chmod 640 /etc/hysteria/config.yaml /etc/hysteria/server.crt /etc/hysteria/server.key 2>/dev/null || true
 fi
