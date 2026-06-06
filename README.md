@@ -86,6 +86,11 @@ sudo ./deploy.sh all
 sudo ./scripts/gen-singbox-client.sh   # → out/client-singbox.json для Hiddify
 ```
 
+**Без git/репозитория на сервере** (один самодостаточный файл — удобно для
+не-программиста): скопируйте на сервер [`bootstrap.sh`](bootstrap.sh) и запустите
+`bash bootstrap.sh` — он сделает hardening + Reality + Hysteria2 и напечатает
+ссылку с QR. Не требует домена.
+
 Или по шагам / через `make`:
 
 ```bash
