@@ -115,6 +115,7 @@ make help               # все команды
 
 | Документ | О чём |
 |----------|-------|
+| 👉 [00-poshagovo-dlya-novichka.md](docs/00-poshagovo-dlya-novichka.md) | **Пошагово для не-программиста** — от покупки сервера до подключения |
 | [01-quickstart.md](docs/01-quickstart.md) | Выбор VPS, «чистый» IP, первое подключение |
 | [02-server-hardening.md](docs/02-server-hardening.md) | UFW, fail2ban, SSH-ключи, защита панели |
 | [03-vless-reality.md](docs/03-vless-reality.md) | Как устроен Reality, выбор донора, параметры |
